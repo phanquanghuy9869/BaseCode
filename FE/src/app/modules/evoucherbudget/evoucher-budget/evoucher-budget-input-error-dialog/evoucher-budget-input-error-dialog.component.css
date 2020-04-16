@@ -1,0 +1,13 @@
+.table-container {
+    overflow: scroll;
+    height: 300px;
+}
+
+.data,
+.label {
+    font-size: 14px;
+}
+
+.data {
+    margin-left: 10px;
+}

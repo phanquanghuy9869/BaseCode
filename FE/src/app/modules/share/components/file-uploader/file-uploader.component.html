@@ -1,0 +1,15 @@
+<div>
+  <input *ngIf="!isReadonly" #uploadFiles id="input-f1" name="input-f1" type="file" (change)="onFileChanged($event)" multiple style="width: 200px;"/>
+  <div class="file-wrapper">
+    <!-- <div class="alert alert-info" *ngIf="attachedFiles"> -->
+    <!-- <strong>Info!</strong> Indicates a neutral informative change or action. -->
+    <ul *ngIf="files && files.length > 0">
+      <li *ngFor="let file of getDisplayFiles(files),let i = index">
+        <a class="non-disable-dom" href="{{fileDisplayUrl}}/{{file.id}}?Authorization={{authTok}}" target="_blank">{{file.fileName}}</a>
+        <a *ngIf="!isReadonly" style="margin-left: 8px; cursor: pointer;color: red;" (click)="deleteFile(i)"> x </a>
+      </li>
+    </ul>
+    <input *ngFor="let file of files" type="hidden" value="{{file.id}}" />
+    <!-- </div> -->
+  </div>
+</div>

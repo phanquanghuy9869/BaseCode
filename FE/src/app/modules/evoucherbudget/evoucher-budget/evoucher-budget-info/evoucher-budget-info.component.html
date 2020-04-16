@@ -1,0 +1,111 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h5>Danh sách ngân sách voucher</h5>
+  </div>
+  <div class="button-wrapper" style="height: 130px;">
+    <a mat-raised-button color="warn" [routerLink]="['/ev-budget/ev-budget']">
+      <mat-icon>close</mat-icon>Hủy
+    </a>
+  </div>
+  <h6>Thông tin chung</h6>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayoutGap="10px" class="formRow">
+      <mat-form-field fxFlex="15">
+        <mat-label>Thời gian</mat-label>        
+        <span *ngIf="item">{{item.budgetDate | date:'dd/MM/yyyy'}}</span>
+        <input matInput *ngIf="item" [(ngModel)]="item.budgetDate" style="display: none;" disabled>
+        <input matInput *ngIf="!item" style="display: none;" disabled>
+      </mat-form-field>
+      <!-- <mat-form-field fxFlex="50">
+        <mat-label>Công ty</mat-label>
+        <input matInput *ngIf="item" [(ngModel)]="item.companyName" disabled>
+        <input matInput *ngIf="!item" disabled>
+      </mat-form-field> -->
+      <mat-form-field flex>
+        <mat-label>Trạng thái nhập liệu</mat-label>
+        <input matInput *ngIf="item" [(ngModel)]="item.statusName" disabled>
+        <input matInput *ngIf="!item" disabled>
+      </mat-form-field>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="10px" class="formRow" style="margin-top:15px;"
+      *ngIf="item && item.status == 0">
+      <button mat-raised-button color="primary" (click)="finishImport()" style="margin-right:10px">
+        <mat-icon>done_all</mat-icon> Hoàn thành nhập ngân sách
+      </button>
+    </div>
+  </div>
+  <div flex fxLayout="row" fxLayoutGap="30px" class="formRow" style="margin-top:20px;">
+    <div flex>
+      <h6>Danh sách ngân sách</h6>
+    </div>
+    <mat-form-field flex>
+      <mat-label>Tổng ngân sách</mat-label>
+      <span *ngIf="item">{{item.budget | moneyFormat}}</span>
+      <input matInput *ngIf="item" [(ngModel)]="item.budget" style="display: none;" disabled>
+      <input matInput *ngIf="!item" style="display: none;" disabled>
+    </mat-form-field>
+    <mat-form-field flex>
+      <mat-label>Tổng nhân viên</mat-label>
+      <input matInput *ngIf="item" [(ngModel)]="item.totalStaff" disabled>
+      <input matInput *ngIf="!item" disabled>
+    </mat-form-field>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>STT</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="codeUser">
+        <mat-header-cell *matHeaderCellDef>Tên đăng nhập</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.codeUser}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="nameUser">
+        <mat-header-cell *matHeaderCellDef>Họ và tên nhân viên</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">{{item.nameUser}}</mat-cell>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="jobTitle">
+        <mat-header-cell *matHeaderCellDef>Chức danh</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">
+          {{item.jobTitle}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="orgCompanyId">
+        <mat-header-cell *matHeaderCellDef>Phòng ban</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">
+          {{item.orgCompanyId}}
+        </mat-cell>
+      </ng-container> -->
+
+      <ng-container matColumnDef="budget">
+        <mat-header-cell *matHeaderCellDef>Ngân sách voucher</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          {{item.budget | moneyFormat}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Trạng thái nhập liệu</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          {{item.statusName}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell *matHeaderCellDef>Ngày nhập liệu</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          {{item.createdDate | date:'dd/MM/yyyy'}}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions" [pageIndex]="page"
+    (page)="onPaginateChange($event)"></mat-paginator>
+</div>

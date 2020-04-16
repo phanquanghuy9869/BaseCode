@@ -1,0 +1,136 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>{{ 'lblBanKHDGCV' | translate }}</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+      <div fxFlex="20">
+        <app-month-picker #monthFilter [inputYm]="filter.yearMonth"></app-month-picker>
+      </div>
+      <mat-form-field fxFlex="20">
+        <mat-label>{{ 'lblTrangThai' | translate }}</mat-label>
+        <mat-select placeholder="{{ 'lblTrangThai' | translate }}" [(ngModel)]="selectedStatus">
+          <mat-option [value]="null"> -- Chọn {{ 'lblTrangThai' | translate }} --</mat-option>
+          <mat-option *ngFor="let item of statusList" [value]="item.id">
+            <span *ngIf="language=='vn'">{{item.title}}</span>
+            <span *ngIf="language!=='vn'">{{item.titleEn}}</span></mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="30">
+        <mat-label>{{ 'lblPhongBan' | translate }}</mat-label>
+        <!-- <mat-select placeholder="Select" [(ngModel)]="filter.orgId">
+          <mat-option [value]="org.id" *ngFor="let org of Orgs">
+            {{org.name}}
+          </mat-option>
+        </mat-select> -->
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'"
+          [displayFieldEn]="'nameEn'" [placeHolder]="'Phòng ban'" [(selectedModel)]="filter.orgId"
+          [applyPanelOverride]="true" (selectedModelChange)="orgChange()">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="filter.orgId">
+      </mat-form-field>
+      <div fxFlex="20">
+        <button mat-raised-button color="primary" (click)="searchPaging()"><mat-icon>search</mat-icon>{{ 'btnTimKiem' | translate }}</button>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+      <mat-form-field fxFlex="20">
+        <mat-label>{{ 'lblQLTT' | translate }}</mat-label>
+        <mat-extend-select required class="width" [items]="this.level1Users" [valueField]="'userName'"
+          [displayField]="'userFullName'" [(selectedModel)]="level1MngUserName" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="level1MngUserName">
+      </mat-form-field>
+      <mat-form-field fxFlex="20">
+        <mat-label>{{ 'lblTenNV' | translate }}</mat-label>
+        <mat-extend-select required class="width" [items]="this.users" [valueField]="'userName'"
+          [displayField]="'userFullName'" [(selectedModel)]="empUserName" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="empUserName">
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="kpi-month">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblThoiGianDG' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.kpiMonth | date:'MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="org-name">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblKhoiDonVi' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.orgName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="employee-name">
+        <mat-header-cell *matHeaderCellDef>{{ 'colTenNV' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.employeeName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="level1ManagerFullName">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblQLTT' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.level1ManagerFullName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="point">
+        <mat-header-cell *matHeaderCellDef>{{ 'colTongDiem' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">
+          <div *ngIf="item.finalKpiPoint && item.finalKpiPoint>0">
+            {{item.finalKpiPoint}}
+          </div>
+          <div *ngIf="!item.finalKpiPoint && !item.finalKpiPoint>0&&item.hrKpiPoint && item.hrKpiPoint>0">
+            {{item.hrKpiPoint}}
+          </div>
+          <div *ngIf="!item.finalKpiPoint && !item.finalKpiPoint>0 && !item.hrKpiPoint && !item.hrKpiPoint>0">
+            {{item.level1ManagerKpiPoint}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="classification">
+        <mat-header-cell *matHeaderCellDef>{{ 'colXepLoai' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">
+          <div *ngIf="item.finalKpiClassification">
+            {{item.finalKpiClassification}}
+          </div>
+          <div *ngIf="!item.finalKpiClassification && item.hrKpiPointClassification">
+            {{item.hrKpiPointClassification}}
+          </div>
+          <div *ngIf="!item.finalKpiClassification && !item.hrKpiPointClassification">
+            {{item.level1ManagerKpiClassification}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="statusName">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblTrangThai' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">
+          <span *ngIf="language=='vn'">{{item.statusName}}</span>
+          <span *ngIf="language!=='vn'">{{item.statusNameEn}}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>TT</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <!-- <button mat-icon-button>
+            <mat-icon>edit_outline</mat-icon>
+          </button> -->
+          <a [routerLink]="['/hr/hr-div-mng-kpi',item.id]">
+            <mat-icon color="warn">edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

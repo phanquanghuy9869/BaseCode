@@ -1,0 +1,57 @@
+table.cdk-table {
+  width: 100%;
+}
+th.cdk-header-cell {
+  text-align: center;
+  border: 1px solid #221f1f;
+  padding: 5 !important;
+  font-weight: bold;
+  color: #221f1f;
+  background: #d3d4d5;
+}
+
+td.cdk-cell {
+  border: 1px solid #221f1f;
+  padding: 0 !important;
+  font-size: 12px;
+}
+
+td.cdk-cell > div {
+  padding: 5px;
+}
+
+.orgRow {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.table-container {
+  max-height: 75%;
+}
+
+tr.mat-row {
+  height: 30px;
+}
+
+tr.mat-row > td {
+  border-top: 1px solid #221f1f;
+  border-bottom: 1px solid #221f1f;
+}
+
+.colName {
+  max-width: 100px;
+}
+
+.colGroup {
+  max-width: 100px;
+}
+
+.colPoint {
+  max-width: 50px;
+}
+
+.colJobTitle {
+  max-width: 50px;
+}
+.colNote{
+  min-width: 100px;
+}

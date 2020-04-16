@@ -1,0 +1,104 @@
+<h1 mat-dialog-title>Chi tiết phân bổ nhân viên</h1>
+<div>
+  <div fxFlex fxLayout="column">
+    <h6>Thông tin chung</h6>
+    <div fxFlex fxLayout="row" fxLayoutGap="20px" style="margin-top: 15px;">
+      <mat-form-field fxFlex="10">
+        <mat-label>Thời gian</mat-label>
+        <span>{{budgetDate | date:'dd/MM/yyyy'}}</span>
+        <input matInput [(ngModel)]="budgetDate" style="display: none;" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex="30">
+        <mat-label>Trạng thái nhập liệu</mat-label>
+        <input matInput *ngIf="item" [(ngModel)]="item.statusName" disabled>
+        <input matInput *ngIf="!item" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex="20">
+        <mat-label>Họ và tên</mat-label>
+        <input matInput *ngIf="item" [(ngModel)]="item.nameUser" disabled>
+        <input matInput *ngIf="!item" disabled>
+      </mat-form-field>
+    </div>
+    <div fxFlex fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex="15">
+        <mat-label>Tài khoản đăng nhập</mat-label>
+        <input matInput *ngIf="item" [(ngModel)]="item.codeUser" disabled>
+        <input matInput *ngIf="!item" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex="10">
+        <mat-label>Ngân sách</mat-label>
+        <span *ngIf="item">{{item.budget | moneyFormat}}</span>
+        <input matInput *ngIf="item" [(ngModel)]="item.budget" style="display: none;" disabled>
+        <input matInput *ngIf="!item" style="display: none;" disabled>
+      </mat-form-field>
+    </div>
+    <h6>Danh sách voucher</h6>
+    <div fxFlex fxLayout="row" fxLayoutGap="10px" style="margin-top: 10px;"
+      *ngIf="item.status === 1 || item.status === 2">
+      <mat-form-field fxFlex="15">
+        <mat-label>Tên voucher</mat-label>
+        <mat-select [(ngModel)]="newVoucherId">
+          <mat-option *ngFor="let vc of voucherTypes" [value]="vc.id">{{vc.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field flex>
+        <mat-label>Số lượng</mat-label>
+        <input matInput [(ngModel)]="newVoucherQty">
+      </mat-form-field>
+      <div flex>
+        <button mat-mini-fab color="primary" (click)="addVoucher()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="table-container">
+      <mat-table class="" [dataSource]="dataSource">
+        <ng-container matColumnDef="STT">
+          <mat-header-cell *matHeaderCellDef>STT</mat-header-cell>
+          <mat-cell *matCellDef='let item; let i = index;' class="centre">{{i + 1}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="voucherTypeName">
+          <mat-header-cell *matHeaderCellDef>Tên voucher</mat-header-cell>
+          <mat-cell *matCellDef='let item' class="centre">{{item.voucherTypeName}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="denominations">
+          <mat-header-cell *matHeaderCellDef>Mệnh giá</mat-header-cell>
+          <mat-cell *matCellDef='let item' class="left">{{item.denominations}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="countNumberPage">
+          <mat-header-cell *matHeaderCellDef>Số lượng</mat-header-cell>
+          <mat-cell *matCellDef="let item" class="centre">
+            {{item.countNumberPage}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="totalValues">
+          <mat-header-cell *matHeaderCellDef>Thành tiền</mat-header-cell>
+          <mat-cell *matCellDef='let item' class="left">
+            {{item.totalValues | moneyFormat}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>Thao tác</mat-header-cell>
+          <mat-cell *matCellDef="let itm" class="centre">
+            <a *ngIf="item.status === 1 || item.status === 2" (click)="remove(itm)">
+              <mat-icon color="warn">clear</mat-icon>
+            </a>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions style="margin-top: 15px;">
+  <button *ngIf="item && (item.status === 1 || item.status === 2)" mat-raised-button color="primary" (click)="okClick()"
+    cdkFocusInitial>Lưu</button>
+  <button mat-raised-button color="ascent" (click)="cancelClick()">Hủy</button>
+</div>

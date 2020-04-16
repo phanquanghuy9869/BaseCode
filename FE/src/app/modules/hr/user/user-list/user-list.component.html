@@ -1,0 +1,100 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Danh sách {{ 'colTenNV' | translate }}</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <div fxFlex="15">
+        <mat-form-field fxFlex="100">
+          <mat-label>{{ 'lblHoTenCB' | translate }}</mat-label>
+          <input matInput [(ngModel)]="txtName">
+        </mat-form-field>
+      </div>
+      <mat-form-field fxFlex="30">
+        <mat-label>{{ 'lblPhongBan' | translate }}</mat-label>
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'" [(selectedModel)]="orgId"
+          [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="orgId">
+      </mat-form-field>
+      <mat-form-field fxFlex="15">
+        <mat-label>{{ 'lblTinhTrangLamViec' | translate }}</mat-label>
+        <mat-select [(ngModel)]="filter.jobStatus">
+          <mat-option [value]="null"> ------ Tất cả ------</mat-option>
+          <mat-option *ngFor="let item of jobStatus" [value]="item.value">
+            <span *ngIf="language=='vn'">{{item.title}}</span>
+            <span *ngIf="language!=='vn'">{{item.titleEn}}</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="searchPaging()" style="margin-right:10px" fxFlex="10"><mat-icon>search</mat-icon>{{
+        'btnTimKiem' | translate }}</button>
+      <button mat-raised-button color="primary" [routerLink]="['/hr/user-add-or-edit',0,page]" fxFlex="10"><mat-icon>add_circle_outline</mat-icon>{{
+        'Addnew' | translate }}</button>
+      <button mat-raised-button class="export btn-xsm" [routerLink]="['/user/import-user']" fxFlex="12"><mat-icon>cloud_upload</mat-icon>
+        Import Excel</button>
+    </div>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>{{ 'colSTT' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblHTenNV' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.userFullName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.userEmail}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="phoneNumber">
+        <mat-header-cell *matHeaderCellDef>Số điện thoại</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.phoneNumber}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="dob">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblDOB' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.dob | date:'dd/MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="idCardNumber">
+        <mat-header-cell *matHeaderCellDef>CMND/CCCD/Hộ chiếu</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.idCardNumber}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="isActived">
+        <mat-header-cell *matHeaderCellDef>Trạng thái tài khoản</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.isActived? 'Hoạt động' : 'Không hoạt động'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="updatedDate">
+        <mat-header-cell *matHeaderCellDef>Ngày cập nhật</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.eDCUpdateDate}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>{{ 'colThaoTac' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <!-- <button mat-icon-button>
+            <mat-icon>edit_outline</mat-icon>
+          </button> -->
+          <a class="edit-icon" [routerLink]="['/hr/user-add-or-edit',item.id,page]">
+            <mat-icon>edit_outline</mat-icon>
+          </a>
+          <!-- <a (click)="removeUser(item)">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </a> -->
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageIndex]="page" [pageSize]="length" [pageSizeOptions]="pageSizeOptions" (page)="onPaginateChange($event)"></mat-paginator>
+</div>

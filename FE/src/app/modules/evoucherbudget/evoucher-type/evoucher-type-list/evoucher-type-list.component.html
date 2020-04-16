@@ -1,0 +1,86 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Danh sách loại E-Voucher</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Mã voucher</mat-label>
+          <input matInput [(ngModel)]="filterCode">
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Tên voucher</mat-label>
+          <input matInput [(ngModel)]="filterName">
+        </mat-form-field>
+      </div>
+      <mat-form-field fxFlex="20">
+        <mat-label>Chọn</mat-label>
+        <mat-select [(ngModel)]="filterIsValidate">
+          <mat-option value="N">Tất cả</mat-option>
+          <mat-option value="T">Hiệu lực</mat-option>
+          <mat-option value="F">Không hiệu lực</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div fxFlex="40">
+        <button mat-raised-button color="primary" (click)="searchPaging()" style="margin-right:10px">
+          <mat-icon>search</mat-icon> {{ 'btnTimKiem' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [routerLink]="['/ev-budget/ev-type-detail',0,page]">
+          <mat-icon>add_circle_outline</mat-icon> {{ 'Addnew' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>STT</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef>Mã</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.code}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Tên Voucher</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">{{item.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="denominations">
+        <mat-header-cell *matHeaderCellDef>Mệnh giá</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">{{item.denominations}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="oderNumber">
+        <mat-header-cell *matHeaderCellDef>Thứ tự</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">{{item.oderNumber}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="isValidate">
+        <mat-header-cell *matHeaderCellDef>Tình trạng hiệu lực</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <mat-icon *ngIf="item.isValidate">check</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Thao tác</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <a [routerLink]="['/ev-budget/ev-type-detail',item.id,page]">
+            <mat-icon color="warn">edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions" [pageIndex]="page"
+    (page)="onPaginateChange($event)"></mat-paginator>
+</div>

@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{87C4F04B-9360-4EDB-B094-C9926D8F92B9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kpi.DataAccess</RootNamespace>
+    <AssemblyName>Kpi.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataContext\AspNetRole.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\AspNetUser.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\AspNetUserClaim.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\AspNetUserLogin.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\DAContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DAContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\DAContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\DAContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DAContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\DAContext1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\DAContext1.Designer.cs" />
+    <Compile Include="DataContext\DAContext2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DAContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\DivMngPer.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\EmpTransfer.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\E_VoucherBudget.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\E_VoucherBudgetDenominations.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\E_VoucherBudgetDetail.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\E_VoucherBudgetDetailLine.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\E_VoucherCode.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\E_VoucherCodeDenominations.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\E_VoucherCodeLine.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\E_VoucherError.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\E_VoucherType.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_CriterionCatalog.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_CriterionType.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_CriterionTypeCatalog.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_DiaryCriterionDetail.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_EventDiary.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_File.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_JobTitleCriterionType.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_KpiCriterionDetail.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_KpiEvaluation.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_Task.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Kpi_Task_File.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Notification_Queue.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Notification_Type.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Org_EmpTracking.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Org_JobTitle.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Org_Organization.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Org_OrganizationType.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Org_UserOrg.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Process_Action.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Process_BussinessApplication.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Process_BussinessProcess.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Process_ProcessStatus.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Process_ProcessTransition.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\RoleMenuPermission.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\sysdiagram.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Sys_EventDiaryConfig.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Sys_KpiPeriodConfig.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Sys_Menu.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Sys_PeriodConfigCriterionType.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Sys_Sequence.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\View_AspNetUserRoles.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\View_EventDiaryConfig.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\View_EventDiaryCriterion.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\View_EVoucherUser.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\View_KpiEvaluation_Organization.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\View_KpiPointEvaluation.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\View_Statistics_Reports.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\View_UnLockDiaryCriterion.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\View_UserOrg_GetPaging.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\View_User_EventDiary.cs">
+      <DependentUpon>DAContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DataEntites.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repo\Base\BaseDataRepository.cs" />
+    <Compile Include="Repo\Base\BaseGridRepository.cs" />
+    <Compile Include="Repo\Base\DatabaseTransaction.cs" />
+    <Compile Include="Repo\Base\GenericEFRepository.cs" />
+    <Compile Include="Repo\Base\UnitOfWork.cs" />
+    <Compile Include="Repo\EFRepos\Business\BusinessApplicationRepository.cs" />
+    <Compile Include="Repo\EFRepos\EVoucher\View_EVoucherUserRepository.cs" />
+    <Compile Include="Repo\EFRepos\EVoucher\EvoucherBudgetDistributeRepository.cs" />
+    <Compile Include="Repo\EFRepos\EVoucher\EvoucherBudgetRepository.cs" />
+    <Compile Include="Repo\EFRepos\EVoucher\EvoucherCodeLineRepository.cs" />
+    <Compile Include="Repo\EFRepos\EVoucher\EvoucherErrorRepository.cs" />
+    <Compile Include="Repo\EFRepos\EVoucher\EvoucherCodeRepository.cs" />
+    <Compile Include="Repo\EFRepos\EVoucher\EvoucherTypeRepository.cs" />
+    <Compile Include="Repo\EFRepos\File\FileRepository.cs" />
+    <Compile Include="Repo\EFRepos\Kpi\CriterionCatalogRepository.cs" />
+    <Compile Include="Repo\EFRepos\Kpi\CriterionTypeCatalogRepository.cs" />
+    <Compile Include="Repo\EFRepos\Kpi\CriterionTypeRepository.cs" />
+    <Compile Include="Repo\EFRepos\Kpi\DiaryCriterionDetailRepository.cs" />
+    <Compile Include="Repo\EFRepos\Kpi\EventDiaryConfigRepository.cs" />
+    <Compile Include="Repo\EFRepos\Kpi\EventDiaryRepository.cs" />
+    <Compile Include="Repo\EFRepos\Kpi\KpiCriterionTypeRepository.cs" />
+    <Compile Include="Repo\EFRepos\Kpi\KpiEvaluationRepository.cs" />
+    <Compile Include="Repo\EFRepos\Kpi\KpiPeriodConfigRepository.cs" />
+    <Compile Include="Repo\EFRepos\Kpi\UnLockDiaryCriterionRepository.cs" />
+    <Compile Include="Repo\EFRepos\Orgs\BaseGridRepository.cs" />
+    <Compile Include="Repo\EFRepos\Orgs\EmploymentHistoryRepository.cs" />
+    <Compile Include="Repo\EFRepos\Orgs\EmpTransferRepository.cs" />
+    <Compile Include="Repo\EFRepos\Orgs\OrgRepository.cs" />
+    <Compile Include="Repo\EFRepos\Orgs\OrgUserRepository.cs" />
+    <Compile Include="Repo\EFRepos\Orgs\ViewEventDiaryConfigRepository.cs" />
+    <Compile Include="Repo\EFRepos\Orgs\ViewUserEventDiaryRepository.cs" />
+    <Compile Include="Repo\EFRepos\Reports\View_KpiEvaluation_OrganizationRepository.cs" />
+    <Compile Include="Repo\EFRepos\Reports\KpiPointEvaluationRepository.cs" />
+    <Compile Include="Repo\EFRepos\Reports\View_Statistics_ReportsRepository.cs" />
+    <Compile Include="Repo\EFRepos\Sys\NotificationRepository.cs" />
+    <Compile Include="Repo\EFRepos\Sys\MenuRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="DataContext\DAContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DAContext2.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataContext\DAContext.edmx.diagram">
+      <DependentUpon>DAContext.edmx</DependentUpon>
+    </None>
+    <None Include="Kpi.DataAccess.csproj.orig" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kpi.Core\Kpi.Core.csproj">
+      <Project>{C091CF90-3945-4155-BE7C-B8FB60093D96}</Project>
+      <Name>Kpi.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataContext\DAContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DAContext.edmx</DependentUpon>
+      <LastGenOutput>DAContext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataContext\DAContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DAContext.edmx</DependentUpon>
+      <LastGenOutput>DAContext1.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

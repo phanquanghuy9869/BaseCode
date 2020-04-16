@@ -1,0 +1,68 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Danh sách khối {{ 'lblPhongBan' | translate }}</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>{{ 'MA' | translate }}</mat-label>
+          <input matInput [(ngModel)]="filterCode">
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Tên</mat-label>
+          <input matInput [(ngModel)]="filterName">
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <button mat-raised-button color="primary" (click)="searchPaging()"
+          style="margin-right:10px"><mat-icon>search</mat-icon> {{ 'btnTimKiem' | translate }}</button>
+        <button mat-raised-button color="primary" [routerLink]="['/hr/hr-org',0,page]"><mat-icon>add_circle_outline</mat-icon> {{ 'Addnew' | translate }}</button>
+      </div>
+    </div>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>{{ 'colSTT' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef>{{ 'MA' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.code}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Tên</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">{{item.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef>Mô tả</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">{{item.description}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="parentName">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblPhongBan' | translate }} cha</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">{{item.parentName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>{{ 'colThaoTac' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <a [routerLink]="['/hr/hr-org',item.id,page]">
+            <mat-icon color="warn">edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions" [pageIndex]="page"
+    (page)="onPaginateChange($event)"></mat-paginator>
+</div>

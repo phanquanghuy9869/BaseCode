@@ -1,0 +1,12 @@
+<h4 mat-dialog-title>{{ 'Capnhatkydanhgiakpi' | translate }}</h4>
+<div mat-dialog-content> 
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutGap.sm="0px">
+    <span>{{ 'kydanhgiatu' | translate }}</span>
+    <app-month-picker #monthFilter></app-month-picker>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <!-- <button mat-raised-button color="primary" mat-button (click)="submit()">Cập nhật</button> -->
+  <button mat-raised-button color="primary" mat-button (click)="forward()">{{ 'TiepTuc' | translate }}</button>
+  <button mat-raised-button color="warn" mat-button (click)="cancel()">{{ 'btnHuy' | translate }}</button>
+</div>

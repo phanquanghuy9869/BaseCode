@@ -1,0 +1,44 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h5>Thông báo</h5>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+
+      <ng-container matColumnDef="userDate">
+        <mat-header-cell *matHeaderCellDef class="colDate">Thời gian</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre colDate italic"
+          [ngClass]="!item.status || item.status === 0 ? 'unread' : ''">{{item.userDate | date:'dd/MM/yyyy HH:mm:ss' : 'UTC'}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="notes">
+        <mat-header-cell *matHeaderCellDef>Nội dung</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre colContent"
+          [ngClass]="!item.status || item.status === 0 ? 'unread' : ''">
+          <span *ngIf="language=='vn'">{{item.notes}}</span>
+          <span *ngIf="language!=='vn'">{{item.notesEn}}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fromUserName">
+        <mat-header-cell *matHeaderCellDef class="colSentUser">Người gửi</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre colSentUser italic"
+          [ngClass]="!item.status || item.status === 0 ? 'unread' : ''">{{item.fromUserName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef class="colTT"></mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre colTT"><a *ngIf="!item.status || item.status === 0" (click)="markRead(item.id)" title="Đánh dấu đã đọc">
+            <mat-icon class="icon unread">done</mat-icon>
+          </a>
+          <a *ngIf="item.status && item.status !== 0" (click)="markUnRead(item.id)" title="Đánh dấu chưa đọc">
+            <mat-icon class="icon unread">markunread</mat-icon>
+          </a></mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

@@ -1,0 +1,98 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>{{ 'lblBanKHDGCV' | translate }}</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+      <app-month-picker #monthFilter [inputYm]="filter.yearMonth"></app-month-picker>
+      <mat-form-field fxFlex="12">
+        <mat-label>{{ 'lblTrangThai' | translate }}</mat-label>
+        <mat-select placeholder="{{ 'lblTrangThai' | translate }}" [(ngModel)]="selectedStatus">
+          <mat-option [value]="null"> -- Chọn {{ 'lblTrangThai' | translate }} --</mat-option>
+          <mat-option *ngFor="let item of statusList" [value]="item.id">{{item.title}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex=16>
+        <mat-label>{{ 'lblHoTenCB' | translate }}</mat-label>
+        <input matInput [(ngModel)]="filter.employeeName">
+      </mat-form-field>
+      <mat-form-field fxFlex="25">
+        <mat-label>{{ 'lblPhongBan' | translate }}</mat-label>
+        <!-- <mat-select placeholder="Select" [(ngModel)]="orgId">
+          <mat-option [value]="org.id" *ngFor="let org of Orgs">
+            {{org.name}}
+          </mat-option>
+        </mat-select> -->
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'" [placeHolder]="'Phòng ban'"
+          [(selectedModel)]="orgId" [applyPanelOverride]="true" style="max-height:50px;">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="orgId">
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="btn-xsm" fxFlex="12" (click)="searchPaging()">
+        <mat-icon>search</mat-icon>{{ 'btnTimKiem' | translate }}
+      </button>
+      <button mat-raised-button color="primary" class="btn-xsm" fxFlex="15" (click)="updateKpiCompleteRange()">
+        <mat-icon>done_outline</mat-icon> Hoàn thành
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="isSelected">
+        <mat-header-cell *matHeaderCellDef><input type="checkbox" (click)="checkAll($event.target.checked)">
+        </mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre"><input type="checkbox" [(ngModel)]="item.uiIsSelected"></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="kpi-month">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblThoiGianDG' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.kpiMonth | date:'MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="org-name">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblKhoiDonVi' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.orgName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="employee-name">
+        <mat-header-cell *matHeaderCellDef>{{ 'colTenNV' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.employeeName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="level1ManagerFullName">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblQLTT' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.level1ManagerFullName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="statusName">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblTrangThai' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">
+          <span *ngIf="language=='vn'">{{item.statusName}}</span>
+          <span *ngIf="language!=='vn'">{{item.statusNameEn}}</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>{{ 'colThaoTac' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <!-- <button mat-icon-button>
+            <mat-icon>edit_outline</mat-icon>
+          </button> -->
+          <a [routerLink]="['/hr/hr-kpi-complete-detail',item.id]">
+            <mat-icon>edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

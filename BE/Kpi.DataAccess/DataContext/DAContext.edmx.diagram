@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b9cd6ac1cdc6450bb6371e89e62a5b11" Name="Diagram1" >
+        <EntityTypeShape EntityType="BRG_KpiModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2" />
+        <EntityTypeShape EntityType="BRG_KpiModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="BRG_KpiModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.875" />
+        <EntityTypeShape EntityType="BRG_KpiModel.AspNetUser" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="BRG_KpiModel.DivMngPer" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.E_VoucherBudget" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.E_VoucherBudgetDenominations" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.E_VoucherBudgetDetail" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.E_VoucherBudgetDetailLine" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.E_VoucherCode" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.E_VoucherCodeDenominations" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.E_VoucherCodeLine" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.E_VoucherError" Width="1.5" PointX="10.75" PointY="4.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.E_VoucherType" Width="1.5" PointX="10.75" PointY="7.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.EmpTransfer" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_CriterionCatalog" Width="1.5" PointX="2.75" PointY="11.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_CriterionType" Width="1.5" PointX="11.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_CriterionTypeCatalog" Width="1.5" PointX="4.75" PointY="11.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_DiaryCriterionDetail" Width="1.5" PointX="12.75" PointY="3.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_EventDiary" Width="1.5" PointX="12.75" PointY="9.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_File" Width="1.5" PointX="13.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_JobTitleCriterionType" Width="1.5" PointX="10.75" PointY="13.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_KpiCriterionDetail" Width="1.5" PointX="12.75" PointY="13.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_KpiEvaluation" Width="1.5" PointX="14.75" PointY="3.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_Task" Width="1.5" PointX="4.75" PointY="14.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Kpi_Task_File" Width="1.5" PointX="15.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Notification_Queue" Width="1.5" PointX="6.75" PointY="15.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Notification_Type" Width="1.5" PointX="16.75" PointY="3.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Org_EmpTracking" Width="1.5" PointX="16.75" PointY="6.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Org_JobTitle" Width="1.5" PointX="8.75" PointY="16.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Org_Organization" Width="1.5" PointX="16.75" PointY="11.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Org_OrganizationType" Width="1.5" PointX="16.75" PointY="15.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Org_UserOrg" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Process_BussinessApplication" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Process_BussinessProcess" Width="1.5" PointX="18.75" PointY="5.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Process_ProcessStatus" Width="1.5" PointX="18.75" PointY="8.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Process_ProcessTransition" Width="1.5" PointX="18.75" PointY="12.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.RoleMenuPermission" Width="1.5" PointX="14.75" PointY="18.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Sys_EventDiaryConfig" Width="1.5" PointX="18.75" PointY="16.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Sys_KpiPeriodConfig" Width="1.5" PointX="2.75" PointY="19.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Sys_Menu" Width="1.5" PointX="4.75" PointY="19.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Sys_PeriodConfigCriterionType" Width="1.5" PointX="10.75" PointY="19.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Sys_Sequence" Width="1.5" PointX="20.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.Process_Action" Width="1.5" PointX="20.75" PointY="3.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.View_AspNetUserRoles" Width="1.5" PointX="20.75" PointY="6.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.View_EventDiaryConfig" Width="1.5" PointX="6.75" PointY="20.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.View_EventDiaryCriterion" Width="1.5" PointX="20.75" PointY="9.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.View_EVoucherUser" Width="1.5" PointX="20.75" PointY="14.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.View_KpiEvaluation_Organization" Width="1.5" PointX="20.75" PointY="20.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.View_KpiPointEvaluation" Width="1.5" PointX="22.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.View_Statistics_Reports" Width="1.5" PointX="22.75" PointY="8.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.View_UnLockDiaryCriterion" Width="1.5" PointX="8.75" PointY="22.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.View_User_EventDiary" Width="1.5" PointX="10.75" PointY="22.75" />
+        <EntityTypeShape EntityType="BRG_KpiModel.View_UserOrg_GetPaging" Width="1.5" PointX="12.75" PointY="22.75" />
+        <AssociationConnector Association="BRG_KpiModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="BRG_KpiModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="BRG_KpiModel.AspNetUserRoles" />
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+=======
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 93ac90bfaf61c67c020940721f8acdd2d35bb060
+=======
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 49f2a332f3375017fb1e5124d50cc2e2700f456a
+        
+        
+        
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

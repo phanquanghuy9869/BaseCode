@@ -1,0 +1,33 @@
+.linkName {
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+
+.linkName:hover {
+  color: #b01117 !important;
+  cursor: pointer;
+}
+
+.colSTT {
+  min-width: 40px;
+  max-width: 40px;
+}
+
+.colName {
+  min-width: 250px;
+  max-width: 250px;
+}
+
+.colTotal {
+  min-width: 120px;
+  max-width: 120px;
+}
+
+.deleted {
+  text-decoration: line-through;
+  font-size: 13px;
+}
+
+.left {
+  text-align: left;
+}

@@ -1,0 +1,33 @@
+<h4 mat-dialog-title>THÔNG BÁO NHẬP MÃ DỮ LIỆU VOUCHER</h4>
+<h5 mat-dialog-title>Thông báo thành công: Hoàn thành nhập dữ liệu</h5>
+<div mat-dialog-content>
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+    <mat-form-field fxFlex=100>
+      <mat-label>Thời gian *</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="importModel.time" disabled>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+    <mat-form-field fxFlex=100>
+      <mat-label>Công ty *</mat-label>
+      <input matInput [(ngModel)]="importModel.orgName" disabled>
+    </mat-form-field>
+  </div>
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+    <mat-form-field fxFlex=100>
+      <mat-label>Loại voucher *</mat-label>
+      <input matInput [(ngModel)]="importModel.voucherTypeName" disabled>
+    </mat-form-field>
+  </div>
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+    <mat-form-field fxFlex=100>
+      <mat-label>Số lượng</mat-label>
+      <input matInput [(ngModel)]="importModel.importData.length" disabled>
+    </mat-form-field>
+  </div>
+<div mat-dialog-actions>
+  <button color="warn" mat-button [mat-dialog-close]="true">OK</button>
+  <!-- <button color="primary" mat-button (click)="submit()">Ok</button> -->
+</div>

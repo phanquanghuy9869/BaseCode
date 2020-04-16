@@ -1,0 +1,93 @@
+<div class="content-wrapper">
+  <div class="form-wrapper">
+    <div class="page-header">
+      <h5>{{ 'lblThongTinNhanSu' | translate }}</h5>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="30">
+        <mat-label>{{ 'lblHTenNV' | translate }} *</mat-label>
+        <input matInput [(ngModel)]="item.userFullName">
+      </mat-form-field>
+      <mat-form-field fxFlex=30>
+        <mat-label> Công ty  </mat-label>
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'" [(selectedModel)]="item.orgId"
+          [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="item.orgId" required>
+      </mat-form-field>
+      <mat-form-field fxFlex="30">
+        <mat-label>Số điện thoại </mat-label>
+        <input matInput [(ngModel)]="item.phoneNumber" required>
+      </mat-form-field>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="30">
+        <mat-label>Email </mat-label>
+        <input matInput [(ngModel)]="item.userEmail" required>
+      </mat-form-field>
+      <mat-form-field fxFlex="30">
+        <mat-label>Ngày sinh *</mat-label>
+        <input matInput [matDatepicker]="pickerDOB" [(ngModel)]="item.dob">
+        <mat-datepicker-toggle matSuffix [for]="pickerDOB"></mat-datepicker-toggle>
+        <mat-datepicker #pickerDOB></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field fxFlex="30">
+        <mat-label>{{ 'lblSoCMND' | translate }}</mat-label>
+        <input matInput [(ngModel)]="item.idCardNumber" required>
+      </mat-form-field>
+    </div>
+
+    <div flex class="formRow" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px" *ngIf="item != null">
+      <mat-form-field fxFlex="15" *ngIf="!item.isHasLogin">
+        <mat-label>{{ 'lblTenDangNhap' | translate }}</mat-label>
+        <input matInput [(ngModel)]="item.userName" required>
+      </mat-form-field>
+      <div fxFlex="15" *ngIf="item.isHasLogin">
+        Tên đăng nhập: {{item.userName}}
+      </div>
+      <div fxFlex="50">
+          <label id="example-radio-group-label" style="margin-right: 15px">Trạng thái tài khoản </label>
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="item.isActived">
+            <mat-radio-button class="example-radio-button" [value]="true"><span style="margin-right: 10px">Hoạt động</span></mat-radio-button>
+            <mat-radio-button class="example-radio-button" [value]="false">Không hoạt động</mat-radio-button>
+          </mat-radio-group>
+        </div>
+    </div>
+    <!-- <div *ngIf="item != null && item.isHasLogin"> -->
+    <div *ngIf="item != null">
+      <h6 style="margin-top:15px;">{{ 'lblThongTinNhomQuyen' | translate }}</h6>
+      <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" *ngIf="item != null">
+        <div flex="15">
+          <mat-checkbox name="chkEmp" class="example-margin" [(ngModel)]="item.isEmployee" (change)="permissionChanged()">
+            <span class="checkbox">Nhận và sử dụng voucher</span>
+          </mat-checkbox>
+        </div>
+        <div flex="15">
+          <mat-checkbox name="chkLv1" class="example-margin" [(ngModel)]="item.isEVoucherManager" (change)="permissionChanged()">
+            <span class="checkbox">Quản lý EVoucher(Gia hạn)</span>
+          </mat-checkbox>
+        </div>
+        <div flex="15">
+          <mat-checkbox name="chkHr" class="example-margin" [(ngModel)]="item.isBudgetDistributor" (change)="permissionChanged()">
+            <span class="checkbox">Phân bổ ngân sách</span>
+          </mat-checkbox>
+        </div>
+        <div flex="15">
+          <mat-checkbox name="chkHrD" class="example-margin" [(ngModel)]="item.isEVoucherDistributor" (change)="permissionChanged()">
+            <span class="checkbox">Phân bổ mã voucher</span>
+          </mat-checkbox>
+        </div>
+        <div flex="15">
+          <mat-checkbox name="chkReport" class="example-margin" [(ngModel)]="item.isDistributorApprover" (change)="permissionChanged()">
+            <span class="checkbox">Phê duyệt phân bổ</span>
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="button-wrapper" style="height: 130px;">
+    <button mat-raised-button color="primary" (click)="addOrEdit()">{{ 'btnLuu' | translate }}</button>
+    <a mat-raised-button color="warn" [routerLink]="['/hr/user', page]">{{ 'btnHuy' | translate }}</a>
+  </div>
+</div>

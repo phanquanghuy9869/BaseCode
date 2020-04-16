@@ -1,0 +1,50 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h5>Nhập dữ liệu mã voucher</h5>
+  </div>
+  <div class="form-wrapper">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <mat-form-field fxFlex=32>
+        <mat-label>Thời gian *</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="importModel.time">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field fxFlex=32>
+        <mat-label>Công ty *</mat-label>
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'" [(selectedModel)]="importModel.orgId"
+          [applyPanelOverride]="true" style="max-height:50px;">
+        </mat-extend-select>
+        <input matInput [(ngModel)]="importModel.orgId" style="display: none;">
+      </mat-form-field>
+    </div>
+
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <mat-form-field fxFlex=32>
+        <mat-label>Loại voucher *</mat-label>
+        <mat-extend-select required class="width" [items]="this.voucherTypes" [valueField]="'code'" [displayField]="'name'" [(selectedModel)]="importModel.voucherTypeCode"
+          [applyPanelOverride]="true" style="max-height:50px;" (selectedModelChange)="vouchTypeChange()">
+        </mat-extend-select>
+        <input matInput [(ngModel)]="importModel.voucherTypeCode" style="display: none;">
+      </mat-form-field>
+      <mat-form-field fxFlex=32>
+        <mat-label>Mệnh giá *</mat-label>
+        <input matInput [(ngModel)]="importModel.denominations" disabled>
+      </mat-form-field>
+    </div>
+
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <div fxFlex=32>
+        <mat-label>Chọn file dữ liệu * (Vui lòng nhập đúng file mẫu)</mat-label>
+        <ngx-excel-import (onUpload)="import($event)" [header]="excelColMapping"></ngx-excel-import>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+  <div class="button-wrapper" style="height: 130px;">
+    <button mat-raised-button color="primary" (click)="submit()">Nhập</button>
+    <a class="back" mat-raised-button (click)="goBack()"><mat-icon>arrow_back</mat-icon>Hủy</a>
+  </div>
+  <mat-divider></mat-divider>
+</div>

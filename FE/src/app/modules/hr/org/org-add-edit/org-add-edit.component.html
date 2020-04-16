@@ -1,0 +1,54 @@
+<div class="content-wrapper">
+  <div class="form-wrapper">
+    <div class="page-header">
+      <h5> {{ 'lblQuanLyPhongBan' | translate }}</h5>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow" style="margin-top:15px;">
+      <mat-form-field fxFlex="15">
+        <mat-label>{{ 'MA' | translate }}</mat-label>
+        <input matInput [(ngModel)]="item.code" required>
+      </mat-form-field>
+      <mat-form-field fxFlex="50">
+        <mat-label>{{ 'lblTen' | translate }}</mat-label>
+        <input matInput [(ngModel)]="item.name" required>
+      </mat-form-field>
+      <mat-form-field fxFlex="15">
+        <mat-label>Loại</mat-label>
+        <mat-extend-select required class="width" [items]="this.orgTypes" [valueField]="'id'" [displayField]="'name'"
+          [(selectedModel)]="item.organizationTypeID" [applyPanelOverride]="true" [disabled]="isReadOnly">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="item.organizationTypeID" required>
+      </mat-form-field>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="15">
+        <mat-label>{{ 'lblPhongBan' | translate }} cha</mat-label>
+        <mat-extend-select required class="width" [items]="this.orgs" [valueField]="'id'" [displayField]="'name'"
+          [(selectedModel)]="item.parentId" [applyPanelOverride]="true" [disabled]="isReadOnly">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="item.parentId" required>
+      </mat-form-field>
+      <mat-form-field fxFlex="50">
+        <mat-label>{{ 'lblTenTiengAnh' | translate }}</mat-label>
+        <input matInput [(ngModel)]="item.nameEn" required>
+      </mat-form-field>
+      
+      <div fxFlex="15">
+        <mat-checkbox class="example-margin" [(ngModel)]="item.isActive">{{ 'lblHieuLuc' | translate }}</mat-checkbox>
+      </div>
+      <mat-form-field fxFlex>
+        <mat-label>{{ 'ThuTu' | translate }}</mat-label>
+        <input matInput [(ngModel)]="item.numberOrder" >
+      </mat-form-field>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="50">
+        <textarea matInput placeholder="{{ 'lblGhiChu' | translate }}" [(ngModel)]="item.description" rows="3"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="button-wrapper" style="height: 130px;">
+      <button mat-raised-button color="primary" (click)="addOrEdit()"><mat-icon>save</mat-icon> {{ 'btnLuu' | translate }}</button>
+      <a mat-raised-button class="back" [routerLink]="['/hr/hr-org',page]"><mat-icon>arrow_back_ios</mat-icon> {{ 'btnHuy' | translate }}</a>
+    </div>
+  </div>
+</div>

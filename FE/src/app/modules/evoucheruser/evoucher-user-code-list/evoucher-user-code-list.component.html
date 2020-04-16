@@ -1,0 +1,53 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Dách sách EVoucher chưa sử dụng</h4>
+  </div>
+  <mat-divider></mat-divider>
+  
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>STT</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="VoucherTypeCode">
+        <mat-header-cell *matHeaderCellDef>Mã</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.code}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="VoucheTypeName">
+        <mat-header-cell *matHeaderCellDef>Tên Voucher</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">{{item.voucheTypeName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Denominations">
+        <mat-header-cell *matHeaderCellDef>Mệnh giá</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.denominations}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="StartDate">
+        <mat-header-cell *matHeaderCellDef>Hạn từ ngày</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.startDate | date:'dd/MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="EndDate">
+        <mat-header-cell *matHeaderCellDef>Hạn đến ngày</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.endDate | date:'dd/MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Thao tác</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <a [routerLink]="['/ev-budget/ev-type-detail',item.id,page]">
+            <mat-icon color="warn">edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions" [pageIndex]="page"
+    (page)="onPaginateChange($event)"></mat-paginator>
+</div>

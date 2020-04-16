@@ -1,0 +1,300 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Báo cáo đánh giá KPI theo {{ 'lblPhongBan' | translate }}</h4>
+  </div>
+  <div class="filter-container">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutGap.sm="0px" style="margin-top:15px;">
+      <div fxFlex="20">
+        <app-month-picker #monthFilter></app-month-picker>
+      </div>
+      <mat-form-field fxFlex="30">
+        <mat-label>{{ 'lblPhongBan' | translate }}</mat-label>
+        <!-- <mat-select placeholder="Select" [(ngModel)]="orgId" required>
+
+          <mat-option [value]="org.id" *ngFor="let org of Orgs">
+            {{org.name}}
+          </mat-option>
+        </mat-select> -->
+
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'" [(selectedModel)]="orgId"
+          [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="orgId" required>
+
+      </mat-form-field>
+      <mat-form-field fxFlex="12">
+        <mat-label>{{ 'lblTrangThai' | translate }}</mat-label>
+        <mat-select placeholder="{{ 'lblTrangThai' | translate }}" [(ngModel)]="selectedStatus">
+          <mat-option [value]="null"> -- {{ 'lblTrangThai' | translate }} --</mat-option>
+          <mat-option *ngFor="let item of statusList" [value]="item.id">{{item.title}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="25">
+        <mat-label>Ghi chú</mat-label>
+        <input matInput [(ngModel)]="submitNote">
+      </mat-form-field>
+
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" class="formRow">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>{{ 'lblQLTT' | translate }}</mat-label>
+          <mat-extend-select required class="width" [items]="this.UserOrgs" [valueField]="'userName'" [displayField]="'userFullName'"
+            [(selectedModel)]="this.newLevel1MngUserName" [applyPanelOverride]="true">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="newLevel1MngUserName" required>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>{{ 'lblHoTenQLCT' | translate }}</mat-label>
+          <mat-extend-select required class="width" [items]="this.UserOrgs" [valueField]="'userName'" [displayField]="'userFullName'"
+            [(selectedModel)]="this.newLevel2MngUserName" [applyPanelOverride]="true" style="max-height:50px;">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="newLevel2MngUserName" required>
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="primary" class="btn-xsm" fxFlex="12" (click)="search()"><mat-icon>search</mat-icon>{{
+        'btnTimKiem' | translate }}
+      </button>
+      <button mat-raised-button class="export btn-xsm" fxFlex="16" (click)="export()"><mat-icon>cloud_download</mat-icon>
+        Export Excel</button>
+    </div>
+  </div>
+
+  <table cdk-table [dataSource]="dataSource">
+    <ng-container cdkColumnDef="STT">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}">{{ 'colSTT' | translate }}</th>
+      <td cdk-cell *cdkCellDef='let item;'>
+        <div>{{item.no}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="STT1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2">{{ 'colSTT' | translate }}</th>
+    </ng-container>
+    <ng-container cdkColumnDef="code">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}">{{ 'MA' | translate }} {{ 'colTenNV' | translate
+        }}</th>
+      <td cdk-cell *matCellDef='let item' [attr.colspan]="item.colSpan">
+        <div>{{item.code}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="code1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2">{{ 'MA' | translate }} {{ 'colTenNV' | translate }}</th>
+    </ng-container>
+    <ng-container cdkColumnDef="employeeName">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}">{{ 'lblHoTenCB' | translate }}</th>
+      <td cdk-cell *matCellDef='let item' [attr.colspan]="item.colSpan">
+        <div>{{item.employeeName}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="employeeName1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2" class="colName">{{ 'lblHoTenCB' | translate }}</th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="employeeJobTitle">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}" class="colJobTitle">{{ 'lblChucDanh' | translate
+        }} công việc</th>
+      <td cdk-cell *cdkCellDef='let item' class="colJobTitle">
+        <div>{{item.employeeJobTitle}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="employeeJobTitle1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2" class="colJobTitle">{{ 'lblChucDanh' | translate }} công việc</th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="statusName">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}" class="colPoint">{{ 'lblTrangThai' | translate
+        }}</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.statusName}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="statusName1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2" class="colJobTitle">{{ 'lblTrangThai' | translate }} công
+        việc</th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="organization">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}">{{ 'lblPhongBan' | translate }}</th>
+      <td cdk-cell *cdkCellDef='let item'>
+        <div>{{item.organization}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="organization1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2">{{ 'lblPhongBan' | translate }}</th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="empKpiPoint">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">{{ 'MUCDOHOANTHANH' | translate }} (%)</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.empKpiPoint}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="empKpiClassification">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">{{ 'colXepLoai' | translate }}</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.empKpiClassification}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="empKpiGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Kết quả đánh giá tháng {{ 'colTenNV' | translate }} {{month}} năm {{year}}
+      </th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="level1ManagerKpiPoint">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">{{ 'MUCDOHOANTHANH' | translate }} (%)</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.level1ManagerKpiPoint}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="level1ManagerKpiClassification">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">{{ 'colXepLoai' | translate }}</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.level1ManagerKpiClassification}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="level1ManagerKpiGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Kết quả đánh giá cấp trên tháng {{month}} năm {{year}}
+      </th>
+    </ng-container>
+
+
+
+    <ng-container cdkColumnDef="hrKpiPoint">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">{{ 'MUCDOHOANTHANH' | translate }} (%)</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.hrKpiPoint}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="hrKpiPointClassification">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">{{ 'lblXepLoai' | translate }}</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.hrKpiPointClassification}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="hrKpiGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Kết quả đánh giá nhân sự tháng {{month}} năm {{year}}
+      </th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="finalKpiPoint">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">{{ 'MUCDOHOANTHANH' | translate }} (%)</th>
+      <td cdk-cell *matCellDef='let item' class="colPoint">
+        <div>{{item.finalKpiPoint}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="finalKpiClassification">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">{{ 'colXepLoai' | translate }}</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.finalKpiClassification}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="leaderKpiGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Phê duyệt của Lãnh đạo Tập đoàn
+      </th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="reportPoint">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">{{ 'MUCDOHOANTHANH' | translate }} (%)</th>
+      <td cdk-cell *matCellDef='let item' class="colPoint">
+        <div>{{item.reportPoint}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="reportClassification">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">{{ 'colXepLoai' | translate }}</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.reportClassification}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="reportKpiGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Kết quả phê duyệt
+      </th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="finalKpiComment">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}">{{ 'lblGhiChu' | translate }}</th>
+      <td cdk-cell *cdkCellDef='let item' class="colNote">
+        <div>{{item.finalKpiComment}}</div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="finalKpiComment1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2" class="colNote">{{ 'lblGhiChu' | translate }}</th>
+    </ng-container>
+    <ng-container cdkColumnDef="submitNote">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}">Ghí chú phần mềm</th>
+      <td cdk-cell *cdkCellDef='let item' class="colNote">
+        <div>{{item.submitNote}}</div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="submitNote1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2" class="colNote">Ghí chú phần mềm</th>
+    </ng-container>
+
+    <tr cdk-header-row *cdkHeaderRowDef="['STT1', 'code1','employeeName1', 'employeeJobTitle1', 'organization1', 'statusName1', 'empKpiGroup', 'level1ManagerKpiGroup','hrKpiGroup','leaderKpiGroup', 'reportKpiGroup','finalKpiComment1','submitNote1']">
+    </tr>
+    <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['employeeName']; when: isOrgRow" class="orgRow"></tr>
+  </table>
+
+  <table border="1" style="margin-top:30px">
+    <thead>
+      <tr>
+        <th>Bảng xếp loại</th>
+        <th>{{ 'lblSoCBNV' | translate }}</th>
+        <th>Xếp loại theo tỉ lệ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Loại A+ (Hoàn thành xuất sắc)</td>
+        <td>{{aPlusCount}}</td>
+        <td>{{aPlusPercent}}</td>
+      </tr>
+      <tr>
+        <td>Loại A (Hoàn thành nhiệm vụ) </td>
+        <td>{{aCount}}</td>
+        <td>{{aPercent}}</td>
+      </tr>
+      <tr>
+        <td>Loại A- (Cơ bản hoàn thành nhiệm vụ)</td>
+        <td>{{aMinusCount}}</td>
+        <td>{{aMinusPercent}}</td>
+      </tr>
+      <tr>
+        <td>Loại B+ (Cần cải thiện) </td>
+        <td>{{bPlusCount}}</td>
+        <td>{{bPlusPercent}}</td>
+      </tr>
+      <tr>
+        <td>Loại B (Cần cải thiện) </td>
+        <td>{{bCount}}</td>
+        <td>{{bPercent}}</td>
+      </tr>
+      <tr>
+        <td>Loại B- (Cần cải thiện) </td>
+        <td>{{bMinusCount}}</td>
+        <td>{{bMinusPercent}}</td>
+      </tr>
+      <tr>
+        <td>Loại C (Không đạt yêu cầu) </td>
+        <td>{{cCount}}</td>
+        <td>{{cPercent}}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>{{ 'lblTongSoCBNVDaDanhGia' | translate }}</th>
+        <th>{{empCount}}</th>
+        <th></th>
+      </tr>
+    </tfoot>
+  </table>
+</div>

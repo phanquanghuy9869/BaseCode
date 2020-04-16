@@ -1,0 +1,15 @@
+.tblSummary,
+.tblSummary td,
+.tblSummary th {
+    border: 1px solid black;
+}
+.tblSummary th {
+    background-color: #cccccc;
+}
+.tblSummary td,
+.tblSummary th {
+    padding: 5px;
+}
+.tblSummary {
+    border-collapse: collapse;
+}

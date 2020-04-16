@@ -1,0 +1,26 @@
+<h4 mat-dialog-title> THÔNG BÁO NHẬP DỮ LIỆU MÃ E-VOUCHER</h4>
+<h5 mat-dialog-title> Thông báo lỗi: Một số dữ liệu không khớp! </h5>
+<div mat-dialog-content>
+  <table mat-table [dataSource]="errors">
+    <ng-container matColumnDef="#">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element; let i = index;"><div style="text-align: center">{{i + 1}}</div></td>
+    </ng-container>
+
+    <ng-container matColumnDef="err">
+      <th mat-header-cell *matHeaderCellDef> Nội dung lỗi </th>
+      <td mat-cell *matCellDef="let element">
+        <div>
+          <span>{{ element }}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayCol"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayCol;"></tr>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button color="primary" mat-button [mat-dialog-close]="false">OK</button>
+  <!-- <button color="primary" mat-button (click)="submit()">Ok</button> -->
+</div>

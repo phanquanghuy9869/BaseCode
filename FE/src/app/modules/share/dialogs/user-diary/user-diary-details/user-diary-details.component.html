@@ -1,0 +1,86 @@
+<h4 mat-dialog-title>{{ 'lblDanhSachSKPS' | translate }}</h4>
+<div mat-dialog-content>
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutGap.sm="0px">
+    <mat-form-field fxFlex="32" appearance="standard">
+      <mat-label>{{ 'lblTenNV' | translate }}</mat-label>
+      <input matInput type="text" [(ngModel)]="model.userFullName" disabled>
+    </mat-form-field>
+    <mat-form-field fxFlex="32" appearance="standard">
+      <mat-label>{{ 'colTongDiemKPI' | translate }} (%)</mat-label>
+      <input matInput type="text" [(ngModel)]="kpiPoint" disabled>
+    </mat-form-field>
+  </div>
+  <div class="table-container">
+    <mat-table #tbl [dataSource]="model.details">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>{{ 'colSTT' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre"><span
+            [className]="item.isDeleted? 'deleted' : ''">{{i + 1}}</span></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="criterionDate">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblNgayPhatSinh' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span [className]="item.isDeleted? 'deleted' : ''">{{ item.criterionDate | date: 'dd/MM/yyyy'}}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="criterionCatalogCode">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblMaSK' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span [className]="item.isDeleted? 'deleted' : ''">{{ item.criterionCatalogCode }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="criterionCatalogName">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblTenSK' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <div title="{{ item.criterionCatalogName }}" [className]="item.isDeleted? 'deleted' : ''">
+            <span *ngIf="language=='vn'">{{item.criterionCatalogName}}</span>
+            <span *ngIf="language!=='vn'">{{item.criterionCatalogNameEn}}</span></div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="kpiPoint">
+        <mat-header-cell *matHeaderCellDef>
+          <div>{{ 'lblTrongSoKPI' | translate }}(%)</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span [className]="item.isDeleted? 'deleted' : ''">{{ item.kpiPoint }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdByUserFullName">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblNguoiDG' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span [className]="item.isDeleted? 'deleted' : ''">{{ item.createdByUserFullName }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdByUserTitle">
+        <mat-header-cell *matHeaderCellDef>
+          <div>{{ 'lblChucDanhNguoiDG' | translate }}</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span [className]="item.isDeleted? 'deleted' : ''" *ngIf="language=='vn'">{{item.createdByUserTitle}}</span>
+          <span [className]="item.isDeleted? 'deleted' : ''"
+            *ngIf="language!=='vn'">{{item.createdByUserTitleEn}}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="comment">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblGhiChu' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span title="{{ item.comment }}" [className]="item.isDeleted? 'deleted' : ''">{{ item.comment }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>{{ 'colThaoTac' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <a *ngIf="model.canDeleteEvent && !item.isDeleted && (isLevel2Manager || item.isLevel1MngAndOwner || item.isHrAndOwner|| item.isHrMngAndOwner)"
+            color="warn" mat-button (click)="deleteEvent(item)">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button color="primary" mat-button [mat-dialog-close]="true">Ok</button>
+</div>

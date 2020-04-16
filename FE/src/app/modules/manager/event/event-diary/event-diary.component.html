@@ -1,0 +1,89 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h5>{{ 'lblNKSK' | translate }}</h5>
+  </div>
+  <mat-divider></mat-divider>
+  <label class="lb-sm">   </label>
+  <div class="filter-container">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <mat-form-field fxFlex="10">
+        <mat-label>{{ 'lblQLTT' | translate }}</mat-label>
+        <input matInput [(ngModel)]="userFullName" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex="20">
+        <mat-label>{{ 'lblPhongBan' | translate }}</mat-label>
+        <mat-extend-select required class="width" [items]="this.eventOrgs" [valueField]="'orgId'"
+          [displayField]="'orgName'"  [(selectedModel)]="filter.orgId" [displayFieldEn]="'orgNameEn'"
+          [applyPanelOverride]="true" style="max-height:50px;">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="filter.orgId">
+      </mat-form-field>
+      <mat-form-field fxFlex="10">
+         <mat-label>{{ 'lblThoiGianDG' | translate }}*</mat-label> 
+        <input matInput [matDatepicker]="dp" placeholder="" [formControl]="diaryDate">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+          (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
+        </mat-datepicker>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="getData()" class="btn-xsm" fxFlex="10"><mat-icon>search</mat-icon>{{ 'btnTimKiem' | translate }}</button>
+      <button mat-raised-button class="export btn-xsm" (click)="exportExcel()" fxFlex="15"><mat-icon>cloud_download</mat-icon> Export Excel</button>
+      <button mat-raised-button color="primary" class="btn-xsm" (click)="completeNotify()" fxFlex="18"><mat-icon>add_alert</mat-icon> Thông báo hoàn thành</button>
+      <!-- <div fxFlex="60">
+        <div class="button-wrapper-sm">
+            <button mat-raised-button color="primary" (click)="getData()" class="btn-xsm"><mat-icon>search</mat-icon>{{ 'btnTimKiem' | translate }}</button>
+            <button mat-raised-button class="export btn-xsm" (click)="exportExcel()"><mat-icon>cloud_download</mat-icon> Export Excel</button>
+            <button mat-raised-button color="primary" class="btn-xsm" (click)="completeNotify()"><mat-icon>add_alert</mat-icon> Thông báo hoàn thành</button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <label class="lb-sm">{{ 'lblBangMaSK' | translate }}</label>
+  <div class="table-container" *ngIf="isFinishLoadingTbl">
+    <table mat-table #tbl [dataSource]="dataSource">
+      <ng-container matColumnDef="STT" sticky>
+        <th mat-header-cell *matHeaderCellDef class="colSTT">#</th>
+        <td mat-cell *matCellDef='let item; let i = index;' class="centre colSTT">{{i + 1}}</td>
+      </ng-container>
+      <ng-container matColumnDef="EmpName" sticky>
+        <th mat-header-cell *matHeaderCellDef class="colName">{{ 'lblHTenNV' | translate }}</th>
+        <td mat-cell *matCellDef="let item" class="centre colName left">
+          <a (click)="openDetailsDialog(item.empName)" class="linkName">{{ item.empName }}</a>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="KpiPoint" sticky>
+        <th mat-header-cell *matHeaderCellDef class="colTotal">{{ 'colTongDiem' | translate }} KPI(%)</th>
+        <td mat-cell *matCellDef="let item" class="centre colTotal">
+          <span>{{ item.kpiPoint }}</span>
+        </td>
+      </ng-container>
+
+      <!-- loop day of month -->
+      <ng-container *ngFor="let col of loopColumns" matColumnDef="{{col}}">
+        <th mat-header-cell *matHeaderCellDef> {{col}} </th>
+        <td mat-cell *matCellDef="let item" class="centre">
+          <ng-container *ngIf="item[col].cellType == DiaryCellTypeEnum.Btn && isEditableDiary(col, item)">
+            <i class="material-icons" (click)="openAddDiaryDialog(col, item)" style="color: #ddd">create</i>
+          </ng-container>
+          <ng-container *ngIf="item[col].cellType == DiaryCellTypeEnum.Arr">
+            <div *ngFor="let c of item[col].value" (click)="openAddDiaryDialog(col, item)"
+            [className]="isEventDeleted(c)?'deleted':''">
+              {{ c.criterionCatalogCode + "/" + c.kpiPoint }}
+            </div>
+            <!-- <button mat-button><i class="material-icons">add</i></button> -->
+          </ng-container>
+        </td>
+      </ng-container>
+      <!-- loop day of month -->
+
+      <!-- <ng-container matColumnDef="Comment" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef>{{col}}</th>
+        <td mat-cell *matCellDef="let item" class="centre">
+          <span>{{ item.comment }}</span>
+        </td>
+      </ng-container> -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

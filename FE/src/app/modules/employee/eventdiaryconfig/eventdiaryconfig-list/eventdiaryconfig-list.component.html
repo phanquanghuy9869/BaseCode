@@ -1,0 +1,98 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>{{ 'menuCauHinhNV' | translate }} </h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+      <mat-form-field fxFlex="20">
+        <mat-label>{{ 'lblPhongBan' | translate }}</mat-label>
+        <mat-extend-select required class="width" [items]="Orgs" [valueField]="'id'" [displayField]="'name'"
+          [(selectedModel)]="orgId" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="orgId">
+      </mat-form-field>
+      <mat-form-field fxFlex="15">
+        <mat-label>{{ 'lblQLTT' | translate }}</mat-label>
+        <mat-extend-select required class="width" [items]="UserOrgs" [valueField]="'id'" [displayField]="'userFullName'"
+          [(selectedModel)]="level1ManagerId" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="level1ManagerId">
+      </mat-form-field>
+      <mat-form-field fxFlex="15">
+        <mat-label>{{ 'lblHoTenQLTT' | translate }}</mat-label>
+        <mat-extend-select required class="width" [items]="UserOrgs" [valueField]="'id'" [displayField]="'userFullName'"
+          [(selectedModel)]="level2ManagerId" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="level2ManagerId">
+      </mat-form-field>
+      <mat-form-field fxFlex="15">
+        <mat-label>{{ 'lblTenNV' | translate }}</mat-label>
+        <mat-extend-select required class="width" [items]="this.users" [valueField]="'userName'"
+          [displayField]="'userFullName'" [(selectedModel)]="filter.username" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="filter.username">
+      </mat-form-field>
+      <div fxFlex="10">
+        <button mat-raised-button color="primary" (click)="searchPaging()"><mat-icon>search</mat-icon>{{ 'btnTimKiem' | translate }}</button>
+      </div>
+      <div fxFlex="10">
+        <button mat-raised-button color="primary" style="margin-left: 5px"
+          [routerLink]="['/emp/event-config-add-or-edit',0,page]"><mat-icon>add_circle_outline</mat-icon>{{ 'Addnew' | translate }}</button>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;'>{{start + i}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Code">
+        <mat-header-cell *matHeaderCellDef>{{ 'MA' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.code}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="orgName">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblPhongBan' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.orgName}}</mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="level1ManagerName">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblHoTenQLTT' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.level1ManagerFullName}}</mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Level2ManagerFullName">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblHoTenQLCT' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.level2ManagerFullName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>{{ 'lblTrangThai' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef='let item'>
+          <span *ngIf="item.isActive">{{ 'lblHieuLuc' | translate }}</span>
+          <span *ngIf="!item.isActive">Không hiệu lực</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>{{ 'THAOTAC' | translate }}</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <!-- <button mat-icon-button>
+            <mat-icon>edit_outline</mat-icon>
+          </button> -->
+          <a class="edit-icon" [routerLink]="['/emp/event-config-add-or-edit',item.id,page]">
+            <mat-icon>edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageIndex]="page" [pageSizeOptions]="pageSizeOptions"
+    (page)="onPaginateChange($event)"></mat-paginator>
+</div>

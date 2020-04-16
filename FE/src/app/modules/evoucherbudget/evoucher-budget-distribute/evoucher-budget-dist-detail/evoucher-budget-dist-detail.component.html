@@ -1,0 +1,147 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h5>Phân bổ ngân sách voucher theo ngày</h5>
+  </div>
+  <div class="button-wrapper" style="height: 130px;">
+    <button *ngIf="item && item.status === 3" mat-raised-button color="primary" (click)="approve()">
+      <mat-icon>done</mat-icon>Duyệt
+    </button>
+    <button *ngIf="item && item.status === 3" mat-raised-button color="primary" (click)="return()">
+      <mat-icon>done</mat-icon>Trả lại
+    </button>
+    <button *ngIf="item && item.status === 2" mat-raised-button color="primary" (click)="completeDistribute()">
+      <mat-icon>done</mat-icon>Hoàn thành
+    </button>
+    <button *ngIf="item && (item.status === 1 || item.status === 2)" mat-raised-button color="primary" (click)="save()">
+      <mat-icon>save</mat-icon>Lưu
+    </button>
+    <a mat-raised-button color="warn" [routerLink]="['/ev-budget/ev-budget-dist']">
+      <mat-icon>close</mat-icon>Hủy
+    </a>
+  </div>
+  <h6 style="margin-top: 15px;">Thông tin chung</h6>
+  <div class="filter-container" (keydown)="onFormSubmit($event)" style="margin-bottom: 0 !important;">
+    <div fxFlex fxLayout="column" fxLayoutGap="10px">
+      <div fxFlex fxLayout="row" fxLayoutGap="10px">
+        <mat-form-field fxFlex="15">
+          <mat-label>Thời gian</mat-label>
+          <span *ngIf="item">{{item.budgetDate | date:'dd/MM/yyyy'}}</span>
+          <input matInput *ngIf="item" [(ngModel)]="item.budgetDate" style="display: none;" disabled>
+          <input matInput *ngIf="!item" style="display: none;" disabled>
+        </mat-form-field>
+        <mat-form-field flex>
+          <mat-label>Trạng thái nhập liệu</mat-label>
+          <input matInput *ngIf="item" [(ngModel)]="item.statusName" disabled>
+          <input matInput *ngIf="!item" disabled>
+        </mat-form-field>
+      </div>
+      <div fxFlex fxLayout="row" fxLayoutGap="10px" *ngIf="item && (item.status === 1 || item.status === 2)">
+        <button mat-raised-button color="primary" (click)="distribute()" style="margin-right:10px">
+          <mat-icon>done_all</mat-icon> Phân bổ
+        </button>
+      </div>
+    </div>
+  </div>
+  <div style="width:100%;">
+    <table fxFlex class="tblSummary">
+      <thead>
+        <tr>
+          <th>Nội dung</th>
+          <th>Số lượng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tổng số nhân viên</td>
+          <td><span *ngIf="item">{{item.totalStaff}}</span></td>
+        </tr>
+        <tr>
+          <td>Tổng ngân sách</td>
+          <td><span *ngIf="item">{{item.budget | moneyFormat}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div fxFlex="20"></div>
+    <table class="tblSummary" fxFlex>
+      <thead>
+        <tr>
+          <th>Voucher chi tiết</th>
+          <th>Mệnh giá</th>
+          <th>Số lượng</th>
+          <th>Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="item">
+        <tr *ngFor="let itm of item.budgetDenominations">
+          <td>{{itm.voucherTypeName}}</td>
+          <td>{{itm.denominations | moneyFormat}}</td>
+          <td>{{itm.countNumber}}</td>
+          <td>{{itm.totalValues | moneyFormat}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Tổng</td>
+          <td></td>
+          <td><span *ngIf="item">{{item.denomiTotalCount}}</span></td>
+          <td><span *ngIf="item">{{item.denomiTotalValues | moneyFormat}}</span></td>
+        </tr>
+      </tfoot>
+    </table>
+    <div fxFlex="10"></div>
+  </div>
+  <h6 style="margin-top:15px;">Danh sách phân bổ ngân sách</h6>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>STT</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{i + 1}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="codeUser">
+        <mat-header-cell *matHeaderCellDef>Tên đăng nhập</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.codeUser}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="nameUser">
+        <mat-header-cell *matHeaderCellDef>Họ và tên nhân viên</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">{{item.nameUser}}</mat-cell>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="jobTitle">
+        <mat-header-cell *matHeaderCellDef>Chức danh</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">
+          {{item.jobTitle}}
+        </mat-cell>
+      </ng-container> -->
+
+      <ng-container matColumnDef="budget">
+        <mat-header-cell *matHeaderCellDef>Ngân sách voucher</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          {{item.budget | moneyFormat}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="left">
+          {{item.statusName}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Thao tác</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <a *ngIf="item.status >= 1" (click)="showEditLineDialog(item)">
+            <mat-icon color="warn">edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions" [pageIndex]="page"
+    (page)="onPaginateChange($event)"></mat-paginator>
+</div>

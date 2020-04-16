@@ -1,0 +1,33 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h5>Nhập dữ liệu mã voucher</h5>
+  </div>
+  <div class="form-wrapper">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <mat-form-field fxFlex=30>
+        <mat-label>Công ty *</mat-label>
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'" [(selectedModel)]="importModel.orgId"
+          [applyPanelOverride]="true" style="max-height:50px;">
+        </mat-extend-select>
+        <input matInput [(ngModel)]="importModel.orgId" style="display: none;">
+      </mat-form-field>
+      <div fxFlex=30>
+        <mat-label>Chọn file dữ liệu *</mat-label>
+        <ngx-excel-import (onUpload)="import($event)" [header]="excelColMapping"></ngx-excel-import>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <mat-form-field fxFlex=20>
+        <mat-label>Số lượng nhân viên *</mat-label>
+        <input matInput type="number" [(ngModel)]="importModel.empCount">
+      </mat-form-field>
+    </div>
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+    </div>
+    <mat-divider></mat-divider>
+    <div class="button-wrapper" style="height: 130px;">
+      <button mat-raised-button color="primary" (click)="submit()">Nhập</button>
+      <a class="back" mat-raised-button (click)="back()"><mat-icon>arrow_back</mat-icon>Hủy</a>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
