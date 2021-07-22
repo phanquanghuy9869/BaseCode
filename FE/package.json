@@ -50,7 +50,7 @@
     "open-iconic": "^1.1.1",
     "roboto-fontface": "^0.10.0",
     "rxjs": "~6.2.0",
-    "xlsx": "^0.15.6",
+    "xlsx": "^0.17.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
